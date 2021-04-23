@@ -1,108 +1,179 @@
-var formulaire1 = document.getElementById("form1");
-var prenom = document.forms[0].elements.PRENOM;
-var nom = document.forms[0].elements.NOM;
-var teleimg = document.forms[0].elements.telecharger;
-var groupe = document.querySelector('select');
-var texbio = document.getElementById("text-bio");
-var chemin = document.forms[0].elements.telecharger.value;
-//views
-var formulaire2 = document.getElementById("form2");
-var viewsUserNom = document.getElementById("user-nom");
-var viewsUserPrenom = document.getElementById("user-prenom");
-var viewsUserGroupe = document.getElementById("user-groupe");
-var viewsNewsBio = document.getElementById("news-bio");
-var viewsImg = document.getElementById("avatar-img");
+let formulaire1 = document.getElementById("form1");
+let prenom = document.getElementById("prenom");
+let nom = document.getElementById("nom");
+let groupe = document.getElementById('groupe');
+let texbio = document.getElementById("text-bio");
+let imgView = document.getElementById("avatar-img");
 
-//viewsmetier
-var contavatar = document.querySelector(".div.conteneur-avatar")
+let inputFile = document.getElementById("telecharger");
 
-//creation de l'objet #avatar-img
-var Personne = {
+
+let person = {
+    prenom: "",
+    nom: "",
+    groupe: "",
+    textBio: "",
+    src: "Image/avatar.svg",
+    test: false,
+
+};
+
+var Tabperson = [{
     prenom: "",
     nom: "",
     groupe: "",
     textbio: "",
-    src: ""
-};
+    src: "",
+    
+}];
 
-var TabPersonne = [];
-// console.log(Personne.prenom);  groupe.value
-function remplirdefaut() {
-    document.forms[0].elements.PRENOM.value = "SERGE";
-    document.forms[0].elements.NOM.value = "KASHALA";
-    document.forms[0].elements.TEXTBIO.value = "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis eos saepe maiores repellat, exercitationem et. Ipsa aspernatur vel suscipit nobis cupiditate recusandae iure, error praesentium, nesciunt nisi, id ex sunt?";
-    document.forms[0].elements.telecharger.value;
+(function remplissageDef() {
+    prenom.value = "Joe";
+    nom.value = "mbaki";
+    texbio.value = "Lorem ipsum dolor sit?";
 
-};
-remplirdefaut();
+})();
 
-//Implementation de methodes
-// contavatar.classList.remove('img');
-function createImage() {
-    var imge = document.createElement("img");
-    imge.classList.add("imgAvatar");
-    imge.src = teleimg.value;
-}
+function Tocheck(prenom, nom, groupe, texbio, person) {
 
-function RemplirTabview() {
-    Personne.nom = nom.value;
-    Personne.prenom = prenom.value;
-    Personne.groupe = groupe.value;
-    Personne.textbio = texbio.value;
-    Personne.src = teleimg.value;
-
-    TabPersonne.push(Personne);
-    return TabPersonne;
-}
-
-function Tocheck() {
-    var resul = false;
-    if (prenom.value != " " || nom.value != " " || groupe.value != " " ||
-        texbio.value != " " || teleimg.value != " ") {
-        RemplirTabview();
-        resul = true;
-    }
-    return resul;
-}
-
-
-function addViews() {
-    // console.log(Tocheck());
-    if (Tocheck()) {
-        for (let index = 0; index < TabPersonne.length; index++) {
-            viewsUserNom.innerText = TabPersonne[index].nom;
-            viewsUserPrenom.innerText = TabPersonne[index].prenom;
-            viewsUserGroupe.innerText = TabPersonne[index].groupe;
-            viewsNewsBio.innerText = TabPersonne[index].textbio;
-            viewsImg.innerText = TabPersonne[index].src;
-
-        }
-        // viewsUserNom.innerText = nom.value;
-        // viewsUserPrenom.innerText = prenom.value;
-        // viewsUserGroupe.innerText = groupe.value;
-        // viewsNewsBio.innerText = texbio.value;
-        // viewsImg.innerText = teleimg.value;
-
-
-        if (teleimg.files && teleimg.files[0]) {
-            teleimg.src = URL.createObjectURL(teleimg.files[0]);
-            viewsImg.src = teleimg.src;
-        }
-
+    let resultat = person;
+    if (prenom.value != "" && nom.value != "" && texbio.value != "") {
+        person.prenom = prenom.value;
+        person.nom = nom.value;
+        person.groupe = groupe.value;
+        person.textBio = texbio.value;
+        person.test = true;
     } else {
-        alert("Veuillez remplir tous les champs");
-    }
+        //Affiche showMessageError()
+        console.log("remplir les champs");
 
+    }
+    return resultat;
+}
+try {
+    if (person.test) {
+        (function downloadImg() {
+
+            inputFile.addEventListener('change', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (inputFile.files && inputFile.files[0]) {
+                    // const element = document.getElementById("photoProfil")
+                    imgView.src = URL.createObjectURL(inputFile.files[0])
+                    imgView.style.backgroundSize = "cover"
+                    person.src = imgView.src;
+                }
+            });
+        })();
+    }
+} catch (error) {
+    console.log("error" + error);
+}
+
+function creatModel(P) {
+
+    var ConteneurAvatar = document.querySelector('#form2 div#conteneur');
+
+    var divitems = document.createElement('div');
+    divitems.className = "conteneur-item";
+
+    // var divItemsRow = document.createElement('div');
+    // divItemsRow.className = ''
+
+    var btndelete = document.createElement('button');
+    btndelete.className = "deleteclass";
+    btndelete.id="iddelete";
+    btndelete.addEventListener("click", onclick);
+
+
+    var tableViews = document.createElement('table');
+    tableViews.className = "tableview";
+    tableViews.id="idtable";
+
+    var tr13 = document.createElement('tr');
+    var donne13 = document.createElement('td');
+
+    donne13.setAttribute("rowspan", "3");
+    donne13.className = "conteneur-avatar";
+
+    var imgeprofil = document.createElement('img');
+    imgeprofil.id = "avatar-img";
+    imgeprofil.classList.add("imgprofil");
+    imgeprofil.alt = "profil";
+    imgeprofil.setAttribute('src', P.src);
+
+    donne13.appendChild(imgeprofil);
+
+    tr13.appendChild(donne13);
+
+    var donne12 = document.createElement('td');
+    donne12.id = "user-nom";
+    donne12.innerText = "NOM: " + P.nom;
+
+    tr13.appendChild(donne12);
+
+    var donne13 = document.createElement('td');
+    donne13.id = "user-prenom";
+    donne13.innerText = "Prenom :" + P.prenom;
+
+    tr13.appendChild(donne13);
+
+    tableViews.appendChild(tr13);
+
+    var tr23 = document.createElement('tr');
+    var donne23 = document.createElement('td');
+    donne23.id = "user-groupe";
+    donne23.setAttribute("colspan", "2");
+    donne23.innerText = "GROUPE:" + P.groupe;
+    tr23.appendChild(donne23);
+
+    tableViews.appendChild(tr23);
+
+    var tr33 = document.createElement('tr');
+    var donne33 = document.createElement('td');
+    donne33.id = "user-groupe";
+    donne33.setAttribute("colspan", "2");
+    donne33.innerText = "BIOGRAPHIE:" + P.textBio;
+    tr33.appendChild(donne33);
+
+    tableViews.appendChild(tr33);
+
+    divitems.appendChild(tableViews);
+    divitems.appendChild(btndelete);
+
+    ConteneurAvatar.appendChild(divitems);
+
+    // console.dir(btndelete);
+    //  btndelete.onclick=(event)=>{
+    //      event.defaultPrevented();
+    //      console.log("supprime"+event);
+    //      console.log("supprime");
+    //  }
+
+    return ConteneurAvatar;
 }
 
 
-formulaire1.addEventListener("submit", (e) => {
-    e.preventDefault();
 
-    console.log(viewsImg.src);
-    this.classList.add("img");
+function showContact() {
+    newPerson = Tocheck(prenom, nom, groupe, texbio, person);
+    Tabperson.push(newPerson);
 
-    addViews();
+    let btndelete= creatModel(newPerson).lastChild.lastChild;
 
+    //console.log(btndelete );
+
+    btndelete.onclick=(event)=>{
+    event.preventDefault();
+    node=event.path[1];
+    node.remove();
+    //console.dir();
+  }
+}
+formulaire1.addEventListener("submit", (event) => {
+    event.preventDefault();
+    //console.log(event)
+    showContact();
+    //deleteUser(Event);
 
 })

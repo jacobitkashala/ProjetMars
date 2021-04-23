@@ -12,54 +12,49 @@
 
 
 <body>
-    <button id="btn-creer" name="sauve">Créer</button>
     <div class="conteneur">
         <div class="title">
             <h1>Répertoire de contact</h1>
+            <input type="text" name="recherche" class="inputrechech">
         </div>
         <div class="conteneur-form">
             <div class="form-left">
                 <form name="enrg" id="form1">
                     <p> Formulaire de contact</p>
                     <div class="conteneur-contente">
-                        <label for="">Prénom</label>
-                        <input type="text" name="PRENOM" id="prenom">
-                        <label for="">Nom</label>
-                        <input type="text" name="NOM" id="nom">
-                        <label for="">Groupe</label>
+                        <label class="info" for="">Prénom</label>
+                        <input class="input" type="text" name="PRENOM" id="prenom">
+                        <label class="info" class="info" for="">Nom</label>
+                        <input class="input" type="text" name="NOM" id="nom">
+                        <label class="info" for="">Groupe</label>
                         <select name="GROUPE" id="groupe">
-                            <option value="option0"></option>
-                            <option value="option1" selected>option1</option>
-                            <option value="option2">option2</option>
-                            <option value="option3">option3</option>
+                            <option value="Informaticien">Informaticien</option>
+                            <option value="Monsieur" selected>Monsieur</option>
+                            <option value="professeur">professeur</option>
+                            <option value="docteur">docteur</option>
                         </select>
-                        <label for="">Bio</label>
+                        <label class="info" for="">Bio</label>
                         <textarea name="TEXTBIO" id="text-bio"></textarea>
                         <div class="charger-img">
-                            <input type="file" name="telecharger" id="fichier-img">
-                            <img src="" alt="avatar">
+                            <div id="fichier-img" class="carre">
+                                <label for="telecharger"> <img class="inputfil" src="Image/telecharger.svg" alt="avatar"></label>
+                                <input type="file" onclick="download()" style="visibility: hidden;" accept="image/*,.jpeg,.png" id="telecharger">
+                            </div>
+                            <img src="Image/avatar.svg" alt="avatar" id="avatar-img" class="imgprofilselect">
                         </div>
                         <div class="grpbt">
                             <button type="submit" id="btn-creer" name="sauve">Créer</button>
                             <button id="btn-reinit" name="clear">Réinit.</button>
                         </div>
+
                     </div>
                 </form>
             </div>
             <div class="form-right">
                 <form id="form2">
                     <p> Formulaire de contact</p>
-                    <div class="conteneur-contente">
-                        <div class="conteneur-avatar">
-                            <img id="avatar-img" src="Image/MAO.jpg" alt="">
-                        </div>
-                        <div class="news">
-                            <h1 id="user-nom">Nom</h1>
-                            <h2 id="user-prenom">Prenom</h2>
-                            <h2 id="user-groupe">groupe</h2>
-                            <p id="news-bio"> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis eos saepe maiores repellat, exercitationem et. Ipsa aspernatur vel suscipit nobis cupiditate recusandae iure, error praesentium, nesciunt nisi, id ex sunt?</p>
-                        </div>
-                        <button id="delete"></button>
+                    <div id="conteneur">
+
                     </div>
                 </form>
             </div>
