@@ -6,7 +6,16 @@ let texbio = document.getElementById("text-bio");
 let imgView = document.getElementById("avatar-img");
 
 let inputFile = document.getElementById("telecharger");
+let btnreinit =document.getElementById("btn-reinit");
 
+btnreinit.onclick=(event)=>{
+    event.preventDefault();
+    event.stopPropagation();
+    prenom.value="";
+    nom.value="";
+    texbio.value="";
+    console.dir(nom.value);
+}
 
 let person = {
     prenom: "",
@@ -44,8 +53,8 @@ function Tocheck(prenom, nom, groupe, texbio, person) {
         person.textBio = texbio.value;
         person.test = true;
     } else {
-        //Affiche showMessageError()
-        console.log("remplir les champs");
+    
+       alert("remplir les champs");
 
     }
     return resultat;
@@ -77,14 +86,10 @@ function creatModel(P) {
     var divitems = document.createElement('div');
     divitems.className = "conteneur-item";
 
-    // var divItemsRow = document.createElement('div');
-    // divItemsRow.className = ''
-
     var btndelete = document.createElement('button');
     btndelete.className = "deleteclass";
     btndelete.id="iddelete";
     btndelete.addEventListener("click", onclick);
-
 
     var tableViews = document.createElement('table');
     tableViews.className = "tableview";
@@ -100,7 +105,7 @@ function creatModel(P) {
     imgeprofil.id = "avatar-img";
     imgeprofil.classList.add("imgprofil");
     imgeprofil.alt = "profil";
-    imgeprofil.setAttribute('src', P.src);
+    imgeprofil.setAttribute('src',personne.src);
 
     donne13.appendChild(imgeprofil);
 
@@ -108,13 +113,13 @@ function creatModel(P) {
 
     var donne12 = document.createElement('td');
     donne12.id = "user-nom";
-    donne12.innerText = "NOM: " + P.nom;
+    donne12.innerText = "NOM: " +personne.nom;
 
     tr13.appendChild(donne12);
 
     var donne13 = document.createElement('td');
     donne13.id = "user-prenom";
-    donne13.innerText = "Prenom :" + P.prenom;
+    donne13.innerText = "Prenom :" +personne.prenom;
 
     tr13.appendChild(donne13);
 
@@ -124,7 +129,7 @@ function creatModel(P) {
     var donne23 = document.createElement('td');
     donne23.id = "user-groupe";
     donne23.setAttribute("colspan", "2");
-    donne23.innerText = "GROUPE:" + P.groupe;
+    donne23.innerText = "GROUPE:" +personne.groupe;
     tr23.appendChild(donne23);
 
     tableViews.appendChild(tr23);
@@ -133,7 +138,7 @@ function creatModel(P) {
     var donne33 = document.createElement('td');
     donne33.id = "user-groupe";
     donne33.setAttribute("colspan", "2");
-    donne33.innerText = "BIOGRAPHIE:" + P.textBio;
+    donne33.innerText = "BIOGRAPHIE:" +personne.textBio;
     tr33.appendChild(donne33);
 
     tableViews.appendChild(tr33);
@@ -143,37 +148,32 @@ function creatModel(P) {
 
     ConteneurAvatar.appendChild(divitems);
 
-    // console.dir(btndelete);
     //  btndelete.onclick=(event)=>{
     //      event.defaultPrevented();
     //      console.log("supprime"+event);
     //      console.log("supprime");
     //  }
-
     return ConteneurAvatar;
 }
-
+const deleteElement=(event)=>{
+    event.preventDefault();
+    let cartContact=event.path[1];
+    cartContact.remove()
+    // console.dir();
+    // //console.dir(event);
+}
 
 
 function showContact() {
     newPerson = Tocheck(prenom, nom, groupe, texbio, person);
     Tabperson.push(newPerson);
-
     let btndelete= creatModel(newPerson).lastChild.lastChild;
 
-    //console.log(btndelete );
-
-    btndelete.onclick=(event)=>{
-    event.preventDefault();
-    node=event.path[1];
-    node.remove();
-    //console.dir();
-  }
+    btndelete.onclick=deleteElement;
 }
 formulaire1.addEventListener("submit", (event) => {
     event.preventDefault();
-    //console.log(event)
+    event.stopPropagation();
     showContact();
-    //deleteUser(Event);
-
+   
 })
