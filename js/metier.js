@@ -14,7 +14,7 @@ btnreinit.onclick=(event)=>{
     prenom.value="";
     nom.value="";
     texbio.value="";
-    console.dir(nom.value);
+    //console.dir(nom.value);
 }
 
 let person = {

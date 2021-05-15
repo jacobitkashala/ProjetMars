@@ -12,7 +12,7 @@
 
 .title {
   background-color: #0084e6;
-  height: 200px;
+  height: 20%;
   box-shadow: 6px 6px 6px #d5d5d5;
 }
 
@@ -21,8 +21,8 @@
   font-size: 3rem;
   padding-left: 50px;
   padding-top: 50px;
+  padding-right: 50px;
   color: #ffffff;
-  /* text-align: center; */
 }
 
 .conteneur-form {
@@ -88,6 +88,7 @@ input {
 input.inputrechech {
   width: 30% !important;
   margin-left: 67%;
+  margin-bottom: 5%;
   padding-top: 15px;
   color: #0084e6;
   font-size: 2rem;
@@ -253,4 +254,43 @@ form#form2 #conteneur {
   padding: 20px 20px 20px 20px;
   margin: 20px;
   display: inline-block;
+}
+
+@media all and (max-width: 547px) {
+  * {
+    font-size: 10px;
+  }
+  #btn-creer {
+    width: 100%;
+    display: block;
+    height: 50px;
+    margin-bottom: 20px;
+  }
+  #btn-reinit {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .charger-img {
+    display: block;
+  }
+  div#fichier-img.carre {
+    width: 100%;
+  }
+  .inputfil {
+    height: 50px;
+    width: 100%;
+  }
+  input.imgprofilselect {
+    display: block;
+    width: 100%;
+  }
+  .grpbt {
+    display: block;
+  }
+  .imgprofilselect {
+    margin-top: 20px;
+    height: 50px;
+  }
 }
