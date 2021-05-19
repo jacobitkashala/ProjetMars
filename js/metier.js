@@ -14,7 +14,7 @@ btnreinit.onclick=(event)=>{
     prenom.value="";
     nom.value="";
     texbio.value="";
-    //console.dir(nom.value);
+    console.dir(nom.value);
 }
 
 let person = {
@@ -79,7 +79,7 @@ try {
     console.log("error" + error);
 }
 
-function creatModel(P) {
+function creatModel(personne) {
 
     var ConteneurAvatar = document.querySelector('#form2 div#conteneur');
 
@@ -159,8 +159,7 @@ const deleteElement=(event)=>{
     event.preventDefault();
     let cartContact=event.path[1];
     cartContact.remove()
-    // console.dir();
-    // //console.dir(event);
+    
 }
 
 
