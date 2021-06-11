@@ -4,83 +4,83 @@ let nom = document.getElementById("nom");
 let groupe = document.getElementById('groupe');
 let texbio = document.getElementById("text-bio");
 let imgView = document.getElementById("avatar-img");
+let inputRecherche = document.getElementById("rechercheinput");
 
 let inputFile = document.getElementById("telecharger");
 let btnreinit =document.getElementById("btn-reinit");
 
 btnreinit.onclick=(event)=>{
+
     event.preventDefault();
     event.stopPropagation();
     prenom.value="";
     nom.value="";
     texbio.value="";
-    console.dir(nom.value);
 }
 
-let person = {
-    prenom: "",
-    nom: "",
-    groupe: "",
-    textBio: "",
-    src: "Image/avatar.svg",
-    test: false,
+let infoContact = {src:""};
+let dbContact=[];
+let contacts = [];
+let contactsRecherche=[];
 
-};
 
-var Tabperson = [{
-    prenom: "",
-    nom: "",
-    groupe: "",
-    textbio: "",
-    src: "",
+function Tocheck(prenom, nom, groupe, texbio) {
+    let contact={
+        prenom:"",
+        nom :"",
+        groupe:"",
+        bio:"",
+    }
+    if (prenom.value != "" && nom.value != ""&& texbio.value != "" && groupe.value != "") {
+        contact.prenom= prenom.value;
+        contact.nom= nom.value;
+        contact.groupe = groupe.value;
+        contact.bio= texbio.value;
+
+        groupe.classList.remove('danger');
+        prenom.classList.remove('danger');
+        nom.classList.remove('danger');
+        texbio.classList.remove('danger');
+        
+        return contact;
     
-}];
-
-(function remplissageDef() {
-    prenom.value = "Joe";
-    nom.value = "mbaki";
-    texbio.value = "Lorem ipsum dolor sit?";
-
-})();
-
-function Tocheck(prenom, nom, groupe, texbio, person) {
-
-    let resultat = person;
-    if (prenom.value != "" && nom.value != "" && texbio.value != "") {
-        person.prenom = prenom.value;
-        person.nom = nom.value;
-        person.groupe = groupe.value;
-        person.textBio = texbio.value;
-        person.test = true;
     } else {
+        if( groupe.value === "") { groupe.classList.add('danger');}
+        if( prenom.value === "") { prenom.classList.add('danger');}
+        if( nom.value === "") {nom.classList.add('danger');}
+        if( texbio.value === "") {texbio.classList.add('danger');}    
+    }
     
-       alert("remplir les champs");
-
-    }
-    return resultat;
-}
-try {
-    if (person.test) {
-        (function downloadImg() {
-
-            inputFile.addEventListener('change', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (inputFile.files && inputFile.files[0]) {
-                    // const element = document.getElementById("photoProfil")
-                    imgView.src = URL.createObjectURL(inputFile.files[0])
-                    imgView.style.backgroundSize = "cover"
-                    person.src = imgView.src;
-                }
-            });
-        })();
-    }
-} catch (error) {
-    console.log("error" + error);
 }
 
-function creatModel(personne) {
+inputFile.onchange=(e)=>{
+    const file=e.target.files[0];
+        
+    if(file && file.type.substr(0,5)==="image"){
+        
+        const reader=new FileReader();
+        reader.readAsDataURL(file);
+      
+        reader.onload=()=>{
+            imgView.src = reader.result;
+         }
+    }
+    
+}
 
+inputRecherche.oninput=(event)=>{
+    
+    let value=event.target.value;
+
+    if(modelContacts.length != 0){
+      let result= modelContactsneReche.filter(person =>person.prenom.toLowerCase().includes(value.toLowerCase()) );
+        
+   // console.log(result)
+    }
+}
+
+function creatModel(contact) {
+   
     var ConteneurAvatar = document.querySelector('#form2 div#conteneur');
 
     var divitems = document.createElement('div');
@@ -105,7 +105,7 @@ function creatModel(personne) {
     imgeprofil.id = "avatar-img";
     imgeprofil.classList.add("imgprofil");
     imgeprofil.alt = "profil";
-    imgeprofil.setAttribute('src',personne.src);
+    imgeprofil.setAttribute('src', contact.src);
 
     donne13.appendChild(imgeprofil);
 
@@ -113,13 +113,13 @@ function creatModel(personne) {
 
     var donne12 = document.createElement('td');
     donne12.id = "user-nom";
-    donne12.innerText = "NOM: " +personne.nom;
+    donne12.innerText = "NOM: " +contact.nom;
 
     tr13.appendChild(donne12);
 
     var donne13 = document.createElement('td');
     donne13.id = "user-prenom";
-    donne13.innerText = "Prenom :" +personne.prenom;
+    donne13.innerText = "Prenom :" +contact.prenom;
 
     tr13.appendChild(donne13);
 
@@ -129,7 +129,7 @@ function creatModel(personne) {
     var donne23 = document.createElement('td');
     donne23.id = "user-groupe";
     donne23.setAttribute("colspan", "2");
-    donne23.innerText = "GROUPE:" +personne.groupe;
+    donne23.innerText = "GROUPE:" +contact.groupe;
     tr23.appendChild(donne23);
 
     tableViews.appendChild(tr23);
@@ -138,7 +138,7 @@ function creatModel(personne) {
     var donne33 = document.createElement('td');
     donne33.id = "user-groupe";
     donne33.setAttribute("colspan", "2");
-    donne33.innerText = "BIOGRAPHIE:" +personne.textBio;
+    donne33.innerText = "BIOGRAPHIE:" +contact.bio;
     tr33.appendChild(donne33);
 
     tableViews.appendChild(tr33);
@@ -146,31 +146,67 @@ function creatModel(personne) {
     divitems.appendChild(tableViews);
     divitems.appendChild(btndelete);
 
-    ConteneurAvatar.appendChild(divitems);
-
-    //  btndelete.onclick=(event)=>{
-    //      event.defaultPrevented();
-    //      console.log("supprime"+event);
-    //      console.log("supprime");
-    //  }
+    ConteneurAvatar.appendChild(divitems); 
+ 
     return ConteneurAvatar;
 }
 const deleteElement=(event)=>{
+
     event.preventDefault();
     let cartContact=event.path[1];
     cartContact.remove()
     
 }
+function fresh(){
 
+   prenom.value = "";
+   nom.value = "";
+   groupe.value = "";
+   texbio.value = ""; 
+}
+
+
+function isEquivalent(newcontact, contactNext) {
+    
+    if(newcontact.groupe === contactNext.groupe && 
+        newcontact.nom === contactNext.nom && 
+        newcontact.prenom === contactNext.prenom  ){
+            return true
+        }
+}
+
+function isExiste(arrayContact){
+
+    if(arrayContact.length >= 2){
+        for (let j = 1; j< arrayContact.length; j++) {
+            if(isEquivalent(arrayContact[0],arrayContact[j])){
+                return true;
+            }else return false
+       }
+    }
+}
 
 function showContact() {
-    newPerson = Tocheck(prenom, nom, groupe, texbio, person);
-    Tabperson.push(newPerson);
-    let btndelete= creatModel(newPerson).lastChild.lastChild;
+   let  newContact = Tocheck(prenom, nom, groupe, texbio);   
 
-    btndelete.onclick=deleteElement;
+    if(newContact != undefined){ 
+       
+        infoContact={...newContact};
+        infoContact.src=  imgView.src ;
+        contacts.push(infoContact);
+        contacts.reverse();
+            
+        fresh();
+
+        if(!isExiste(contacts)){
+            let btndelete=creatModel(infoContact).lastChild.lastChild
+             btndelete.onclick=deleteElement;
+        } 
+    }
 }
+
 formulaire1.addEventListener("submit", (event) => {
+    
     event.preventDefault();
     event.stopPropagation();
     showContact();

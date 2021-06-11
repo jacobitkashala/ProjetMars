@@ -85,7 +85,7 @@ input {
 input.inputrechech {
   width: 30% !important;
   margin-left: 67%;
-  margin-bottom: 5%;
+  margin-bottom:  1%;
   padding-top: 15px;
   color: #0084e6;
   font-size: 2rem;
@@ -106,7 +106,7 @@ textarea {
 
 .inputfil {
   height: 90px;
-  width: 60%;
+  width: 30%;
   border: solid 1px #0084e6;
   border-radius: 15px;
   box-shadow: 6px 6px 6px #0084e6;
@@ -180,7 +180,7 @@ textarea {
 #user-prenom,
 #user-groupe {
   color: #969393;
-  margin: 20px 20px 20px 0px;
+  margin: 15px 15px 15px 0px;
   font-size: 1.5rem;
 }
 
@@ -197,7 +197,10 @@ textarea {
   border-radius: 50%;
   box-shadow: 6px 6px 6px black;
 }
-
+.danger{
+  border:5px solid #f9515a;
+  background-color:  #f9515a;
+}
 .imgAvatar {
   position: relative;
   height: 220px;
